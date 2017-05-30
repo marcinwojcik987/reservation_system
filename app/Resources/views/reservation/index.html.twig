@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reservations list</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Reservation</th>
+            <th>Price</th>
+            <th>Actions</th>
+            <th>User</th>
+            <th>Room</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td><a href="{{ path('reservation_show', { 'id': reservation.id }) }}">{{ reservation.id }}</a></td>
+                <td>{% if reservation.reservation %}
+                        {{ reservation.reservation|date('Y-m-d ') }} <br>
+                        {{ reservation.reservation|date_modify('+'~reservation.days~' days')|date('Y-m-d ') }}
+                    {% endif %}</td>
+                <td> {{  reservation.days * reservation.room.price }} $</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('reservation_show', { 'id': reservation.id }) }}">show</a>
+                        </li>{% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('reservation_edit', { 'id': reservation.id }) }}">edit</a>
+                        </li>{% endif %}
+                    </ul>
+                </td>
+                <td>
+                    <a href="{{ path('user_show', {'id':reservation.user.id}) }}"> {{ reservation.user.username }}</a>
+                </td>
+                <td>
+                    <a href="{{ path('room_show', {'id':reservation.room.id}) }}"> {{ reservation.room.name }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        {#<li>#}
+        {#<a href="{{ path('reservation_new') }}">Create a new reservation</a>#}
+        {#</li>#}
+    </ul>
+{% endblock %}

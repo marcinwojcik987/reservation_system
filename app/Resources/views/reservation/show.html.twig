@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reservation</h1>
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reservation.id }}</td>
+            </tr>
+            <tr>
+                <th>Reservation</th>
+                <td>{% if reservation.reservation %}
+                        {{ reservation.reservation|date('Y-m-d ') }} <br>
+                        {{ reservation.reservation|date_modify('+'~reservation.days~' days')|date('Y-m-d ') }}
+
+                    {% endif %}</td>
+            </tr>
+        <tr>
+            <th>Price</th>
+            <td>{{  reservation.days * reservation.room.price }} $</td>
+        </tr>
+       <tr>
+           <th>Room</th>
+           <td>{{ reservation.room.name }}</td>
+       </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('reservation_index') }}">Back to the list</a><br>
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <a href="{{ path('reservation_edit', { 'id': reservation.id }) }}">Edit</a><br><br>
+
+
+        {{ form_start(delete_form) }}
+        <input type="submit" value="Delete" class="btn btn-danger">
+        {{ form_end(delete_form) }}
+    {% endif %}
+
+{% endblock %}

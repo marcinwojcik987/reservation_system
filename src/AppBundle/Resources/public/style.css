@@ -1,0 +1,5 @@
+.carousel-inner>.item {
+    overflow: hidden;
+    height: 90vh;
+
+}

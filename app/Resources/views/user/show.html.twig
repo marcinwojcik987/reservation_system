@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Id: </th>
+                <td>{{ user.id }}</td>
+                <th>Imię: </th>
+                <td>{{ user.username }}</td>
+                <th>Email: </th>
+                <td>{{ user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+            <a href="{{ path('user_index') }}">Back to the list</a><br>
+
+            <a href="{{ path('user_edit', { 'id': user.id }) }}">Edit</a><br>
+
+            {#{{ form_start(delete_form) }}#}
+                {#<input type="submit" value="Delete" class="btn btn-danger">#}
+            {#{{ form_end(delete_form) }}#}
+        {% endif %}
+
+{% endblock %}

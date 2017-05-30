@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>User edit</h1>
+    {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        <input type="submit" value="Edit" class="btn btn-success"/>
+        {{ form_end(edit_form) }}
+
+        {{ form_start(delete_form) }}
+        {{ form_start(delete_form) }}
+        {{ form_widget(delete_form) }}
+        <input type="submit" value="Delete" class="btn btn-danger">
+        {{ form_end(delete_form) }}
+    {% endif %}
+    <a href="{{ path('user_index') }}">Back to the list</a>
+
+    {#<ul>#}
+    {#<li>#}
+    {#<a href="{{ path('user_index') }}">Back to the list</a>#}
+    {#</li>{% if is_granted('ROLE_ADMIN') %}#}
+    {#<li>#}
+    {#{{ form_start(delete_form) }}#}
+    {#<input type="submit" value="Delete">#}
+    {#{{ form_end(delete_form) }}#}
+    {#</li>{% endif %}#}
+    {#</ul>#}
+{% endblock %}

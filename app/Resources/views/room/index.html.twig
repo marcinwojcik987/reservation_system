@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Rooms list</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Breakfast</th>
+                <th>Availability</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for room in rooms %}
+            <tr>
+                <td><a href="{{ path('room_show', { 'id': room.id }) }}">{{ room.id }}</a></td>
+                <td><a href="{{ path('room_show', { 'id': room.id }) }}">
+                        <img src="{{ asset('img/' ~ room.photo) }}" class="img-rounded" width="304" height="236"></a>
+                </td>
+                {#<td><img src="{{ asset('img/' ~ room.photo) }}" class="img-rounded" width="304" height="236"></td>#}
+                <td>{{ room.name }}</td>
+                <td>{{ room.price }} $</td>
+                <td>{{ room.description }}</td>
+                <td>{{ room.breakfast }}</td>
+                <td>{{ room.availability }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('room_show', { 'id': room.id }) }}">show</a>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('room_edit', { 'id': room.id }) }}">edit</a>
+                        </li>{% endif %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>{% if is_granted('ROLE_ADMIN') %}
+        <li>
+            <a href="{{ path('room_new') }}">Create a new room</a>
+        </li>{% endif %}
+    </ul>
+{% endblock %}
